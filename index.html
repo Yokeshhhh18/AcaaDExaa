@@ -1,988 +1,125 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AcaDexa - Smart Scheduling Platform</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <!-- FullCalendar JS and CSS -->
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
-        // Tailwind dark mode config
-        tailwind.config = {
-            darkMode: 'class',
-        }
-    </script>
-
+    <title>Yokesh Kumar M | Electrical & Electronics Engineer</title>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            @apply bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200;
-        }
-        .font-poppins {
-            font-family: 'Poppins', sans-serif;
-        }
-        .hero-bg {
-            background: #1e293b; /* Dark Slate */
-            background-image: linear-gradient(145deg, rgba(20, 83, 45, 0.3) 0%, rgba(30, 41, 59, 0) 60%);
-        }
-        .feature-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            @apply bg-white dark:bg-slate-800;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(92, 115, 160, 0.15);
-        }
-        .unscheduled-item {
-            cursor: grab;
-            transition: all 0.2s ease-in-out;
-        }
-        .unscheduled-item:hover {
-            transform: scale(1.03);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        
-        /* FullCalendar Customization */
-        :root {
-            --fc-border-color: #e2e8f0;
-            --fc-daygrid-event-dot-width: 8px;
-            --fc-list-event-hover-bg-color: #f1f5f9;
-        }
-        html.dark {
-            --fc-border-color: #334155;
-            --fc-day-bg-color: #1e293b;
-            --fc-list-event-hover-bg-color: #334155;
-            --fc-today-bg-color: rgba(30, 41, 59, 0.8);
-        }
-        .fc .fc-toolbar-title { @apply text-xl font-bold text-slate-800 dark:text-slate-100; }
-        .fc .fc-button { @apply bg-teal-600 border-teal-600 hover:bg-teal-700 hover:border-teal-700; }
-        .fc .fc-button-primary:not(:disabled).fc-button-active { @apply bg-teal-700 border-teal-700; }
-        .fc-event { border-width: 2px !important; cursor: pointer; }
-        .fc-event.conflict {
-            border: 2px solid #ef4444 !important;
-            animation: pulse-red 1s infinite;
-        }
-        .fc-event.absent {
-            @apply opacity-50 bg-slate-400 border-slate-500;
-        }
-        .fc-event.filtered-out {
-            @apply opacity-20 pointer-events-none;
-        }
-        
-        .modal { transition: opacity 0.3s ease, visibility 0.3s ease; }
-        .toast { transition: opacity 0.3s ease, transform 0.3s ease; }
-
-        .status-dot { @apply w-2 h-2 rounded-full inline-block; }
-        .status-draft { @apply bg-slate-400; }
-        .status-pending { @apply bg-amber-400; }
-        .status-approved { @apply bg-green-500; }
-
-        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
-
-        /* Custom toggle switch */
-        .toggle-checkbox:checked { @apply bg-teal-600 right-0 border-teal-600; }
-        .toggle-checkbox:checked + .toggle-label { @apply bg-teal-600; }
-
-        /* Heatmap styles */
-        .fc .fc-timegrid-slot.heatmap-1 { background-color: rgba(20, 184, 166, 0.1); }
-        .fc .fc-timegrid-slot.heatmap-2 { background-color: rgba(20, 184, 166, 0.2); }
-        .fc .fc-timegrid-slot.heatmap-3 { background-color: rgba(245, 158, 11, 0.2); }
-        .fc .fc-timegrid-slot.heatmap-4 { background-color: rgba(239, 68, 68, 0.2); }
-        .dark .fc .fc-timegrid-slot.heatmap-1 { background-color: rgba(20, 184, 166, 0.15); }
-        .dark .fc .fc-timegrid-slot.heatmap-2 { background-color: rgba(20, 184, 166, 0.25); }
-        .dark .fc .fc-timegrid-slot.heatmap-3 { background-color: rgba(245, 158, 11, 0.25); }
-        .dark .fc .fc-timegrid-slot.heatmap-4 { background-color: rgba(239, 68, 68, 0.25); }
-
-
-        @media print {
-            body * { visibility: hidden; }
-            #calendar-container, #calendar-container * { visibility: visible; }
-            #calendar-container { position: absolute; left: 0; top: 0; width: 100%; }
-        }
+        /* Basic CSS for structure - you can replace this with your own stylesheet */
+        body { font-family: sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
+        header { background-color: #2c3e50; color: white; padding: 1rem 0; text-align: center; }
+        nav { background-color: #34495e; padding: 1rem; text-align: center; }
+        nav a { color: white; margin: 0 15px; text-decoration: none; }
+        section { padding: 2rem 5%; }
+        h1, h2, h3 { color: #2c3e50; }
+        .project-card, .exp-card { background-color: white; border: 1px solid #ddd; padding: 1.5rem; margin-bottom: 1rem; }
+        footer { background-color: #2c3e50; color: white; text-align: center; padding: 1rem 0; }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- Header -->
-    <header class="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold text-white tracking-wider font-poppins">
-                Aca<span class="text-teal-400">Dexa</span>
-            </div>
-            <div class="hidden md:flex space-x-8 items-center">
-                <a href="#dashboard" class="text-slate-300 hover:text-teal-300 transition hidden" id="nav-dashboard-link">Dashboard</a>
-                <a href="#features" class="text-slate-300 hover:text-teal-300 transition">Core Features</a>
-                <a href="#tutorial" class="text-slate-300 hover:text-teal-300 transition">Live Timetable</a>
-            </div>
-            <div class="flex items-center gap-4">
-                 <button id="tutorial-btn" class="text-slate-300 hover:text-teal-300 transition text-xl" title="How to Use">
-                    <i class="fa-solid fa-circle-question"></i>
-                </button>
-                <button id="dark-mode-toggle" class="text-slate-300 hover:text-teal-300 transition text-xl" title="Toggle Dark Mode">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-                <div id="auth-container">
-                     <button id="login-btn" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-lg transition shadow-md hover:shadow-lg">Staff Login</button>
-                </div>
-            </div>
-        </nav>
+    <header id="home">
+        [span_0](start_span)<h1>Yokesh Kumar M[span_0](end_span)</h1>
+        <p>Electrical and Electronics Engineering Student</p>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero-bg text-white py-24 sm:py-32">
-            <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight font-poppins">
-                    Intelligent Scheduling for Smart Campuses
-                </h1>
-                <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-slate-300">
-                    AcaDexa is the practical platform for scheduling classes, managing resources, and resolving conflicts, designed for the modern educational institution.
-                </p>
-                <div class="mt-8 flex justify-center gap-4">
-                    <a href="#tutorial" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition">Manage Timetable</a>
-                </div>
-            </div>
-        </section>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-        <!-- Dashboard Section (Initially Hidden) -->
-        <section id="dashboard" class="py-20 bg-slate-100 dark:bg-slate-800 hidden">
-            <div class="container mx-auto px-6">
-                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
-                    <div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100">Welcome, KASHY</h2>
-                        <p class="mt-1 text-slate-500 dark:text-slate-400">Here's your campus overview for today.</p>
-                    </div>
-                    <div class="flex gap-2 flex-wrap">
-                        <button id="optimize-schedule-btn" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition flex items-center gap-2">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> Optimize Schedule
-                        </button>
-                        <button id="submit-approval-btn" class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-lg transition flex items-center gap-2">
-                            <i class="fa-solid fa-paper-plane"></i> Submit for Approval
-                        </button>
-                         <button id="print-schedule-btn" class="bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg transition flex items-center gap-2">
-                            <i class="fa-solid fa-print"></i> Print Schedule
-                        </button>
-                    </div>
-                </div>
-                <!-- KPI Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                     <div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md flex items-center gap-4">
-                        <div class="bg-teal-100 text-teal-600 rounded-full h-12 w-12 flex items-center justify-center text-xl"><i class="fa-solid fa-calendar-check"></i></div>
-                        <div>
-                            <div class="text-3xl font-bold text-slate-800 dark:text-white" id="kpi-total-classes">0</div>
-                            <div class="text-slate-500 dark:text-slate-400">Classes Scheduled</div>
-                        </div>
-                    </div>
-                     <div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md flex items-center gap-4">
-                        <div class="bg-blue-100 text-blue-600 rounded-full h-12 w-12 flex items-center justify-center text-xl"><i class="fa-solid fa-users"></i></div>
-                        <div>
-                            <div class="text-3xl font-bold text-slate-800 dark:text-white" id="kpi-total-students">0</div>
-                            <div class="text-slate-500 dark:text-slate-400">Total Students</div>
-                        </div>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md flex items-center gap-4">
-                        <div class="bg-red-100 text-red-600 rounded-full h-12 w-12 flex items-center justify-center text-xl"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                        <div>
-                            <div class="text-3xl font-bold text-slate-800 dark:text-white" id="kpi-conflicts">0</div>
-                            <div class="text-slate-500 dark:text-slate-400">Active Conflicts</div>
-                        </div>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md flex items-center gap-4">
-                        <div class="bg-amber-100 text-amber-600 rounded-full h-12 w-12 flex items-center justify-center text-xl"><i class="fa-solid fa-inbox"></i></div>
-                        <div>
-                            <div class="text-3xl font-bold text-slate-800 dark:text-white" id="kpi-unscheduled">0</div>
-                            <div class="text-slate-500 dark:text-slate-400">Unscheduled</div>
-                        </div>
-                    </div>
-                </div>
+    <section id="about">
+        <h2>About Me</h2>
+        [span_1](start_span)<p>A collaborative problem-solver seeking to apply my technical aptitude and strong interpersonal skills within a dynamic team environment.[span_1](end_span) [span_2](start_span)My objective is to contribute to shared goals and help build innovative solutions through effective teamwork and a dedicated work ethic.[span_2](end_span)</p>
+        <h3>Areas of Interest</h3>
+        <ul>
+            [span_3](start_span)<li>Embedded Systems[span_3](end_span)</li>
+            [span_4](start_span)<li>Hardware Designing[span_4](end_span)</li>
+            [span_5](start_span)<li>Control systems[span_5](end_span)</li>
+            [span_6](start_span)<li>Software Development[span_6](end_span)</li>
+            [span_7](start_span)<li>Internet of Things (IoT)[span_7](end_span)</li>
+            [span_8](start_span)<li>Power systems[span_8](end_span)</li>
+        </ul>
+    </section>
 
-                <!-- Analytics Charts -->
-                <div class="grid lg:grid-cols-2 gap-8">
-                    <div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-slate-800 dark:text-white">Faculty Workload Distribution</h3>
-                        <canvas id="workloadChart"></canvas>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-slate-800 dark:text-white">Room Capacity Utilization</h3>
-                        <canvas id="capacityChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Core Features Section -->
-        <section id="features" class="py-20 bg-white dark:bg-slate-900/50">
-            <div class="container mx-auto px-6">
-                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100">A Platform Built for Schedulers</h2>
-                    <p class="mt-2 text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">AcaDexa is built to handle the complexities of academic scheduling.</p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="feature-card p-8 rounded-xl shadow-sm">
-                        <div class="bg-teal-100 text-teal-600 rounded-full h-12 w-12 flex items-center justify-center mb-4"><i class="fa-solid fa-check-to-slot"></i></div>
-                        <h3 class="text-xl font-bold mb-2 text-slate-800 dark:text-white">Approval Workflows</h3>
-                        <p class="text-slate-500 dark:text-slate-400">Streamline timetable finalization with multi-level approval. Authorities can review, suggest changes, or approve schedules with a click.</p>
-                    </div>
-                    <div class="feature-card p-8 rounded-xl shadow-sm">
-                        <div class="bg-teal-100 text-teal-600 rounded-full h-12 w-12 flex items-center justify-center mb-4"><i class="fa-solid fa-lightbulb"></i></div>
-                        <h3 class="text-xl font-bold mb-2 text-slate-800 dark:text-white">Conflict Rearrangement</h3>
-                        <p class="text-slate-500 dark:text-slate-400">When conflicts arise, our AI assistant provides the best alternative rearrangements, balancing faculty and room constraints.</p>
-                    </div>
-                    <div class="feature-card p-8 rounded-xl shadow-sm">
-                        <div class="bg-teal-100 text-teal-600 rounded-full h-12 w-12 flex items-center justify-center mb-4"><i class="fa-solid fa-building"></i></div>
-                        <h3 class="text-xl font-bold mb-2 text-slate-800 dark:text-white">Multi-Department & Shift</h3>
-                        <p class="text-slate-500 dark:text-slate-400">Effortlessly manage schedules across multiple departments, programs, and shifts within a single, unified platform.</p>
-                    </div>
-                     <div class="feature-card p-8 rounded-xl shadow-sm">
-                        <div class="bg-teal-100 text-teal-600 rounded-full h-12 w-12 flex items-center justify-center mb-4"><i class="fa-solid fa-chalkboard-user"></i></div>
-                        <h3 class="text-xl font-bold mb-2 text-slate-800 dark:text-white">Smart Classroom Ready</h3>
-                        <p class="text-slate-500 dark:text-slate-400">Integrate with smart displays for real-time schedule updates and automatically book required A/V equipment for each class.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Timetable Section -->
-        <section id="tutorial" class="py-20 bg-slate-100 dark:bg-slate-800">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100">Live Timetable Editor</h2>
-                    <p class="mt-2 text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Add classes, then drag them from the "Unscheduled" list onto the calendar. Log in to save your changes.</p>
-                </div>
-                
-                 <div class="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-md mb-6 max-w-6xl mx-auto">
-                    <form id="add-class-form" class="grid sm:grid-cols-6 gap-4 items-end">
-                        <input type="text" id="subject" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm dark:bg-slate-800 border-slate-300 dark:border-slate-600 focus:border-teal-500 focus:ring-teal-500" placeholder="Subject Name" required>
-                        <input type="text" id="prof" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm dark:bg-slate-800 border-slate-300 dark:border-slate-600 focus:border-teal-500 focus:ring-teal-500" placeholder="Professor" required>
-                        <input type="text" id="room" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm dark:bg-slate-800 border-slate-300 dark:border-slate-600 focus:border-teal-500 focus:ring-teal-500" placeholder="Room No." required>
-                        <input type="number" id="students" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm dark:bg-slate-800 border-slate-300 dark:border-slate-600 focus:border-teal-500 focus:ring-teal-500" placeholder="No. of Students" required>
-                        <select id="color" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm dark:bg-slate-800 border-slate-300 dark:border-slate-600 focus:border-teal-500 focus:ring-teal-500">
-                            <option value="#a855f7">Purple</option>
-                            <option value="#0ea5e9">Sky Blue</option>
-                            <option value="#14b8a6">Teal</option>
-                            <option value="#f59e0b">Amber</option>
-                            <option value="#f43f5e">Rose</option>
-                        </select>
-                        <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg transition w-full h-fit">Add to List</button>
-                    </form>
-                </div>
-
-                <div class="grid lg:grid-cols-12 gap-6" id="calendar-container">
-                    <div class="lg:col-span-2">
-                         <h3 class="font-bold text-center text-slate-700 dark:text-slate-300 mb-2">Unscheduled Classes</h3>
-                         <div id="unscheduled-list" class="bg-white dark:bg-slate-800/50 p-4 rounded-xl shadow-lg min-h-[100px] space-y-2"></div>
-                    </div>
-                    <div class="lg:col-span-10 bg-white dark:bg-slate-900 p-4 rounded-2xl shadow-lg">
-                        <div class="flex justify-end items-center gap-4 mb-2">
-                             <div class="flex items-center" id="view-as-container">
-                                <label for="view-as-filter" class="text-sm font-medium text-slate-700 dark:text-slate-300 mr-2">View As:</label>
-                                <select id="view-as-filter" class="rounded-md shadow-sm sm:text-sm dark:bg-slate-800 border-slate-300 dark:border-slate-600 focus:border-teal-500 focus:ring-teal-500"></select>
-                            </div>
-                            <div class="flex items-center">
-                                <label for="heatmap-toggle" class="text-sm font-medium text-slate-700 dark:text-slate-300 mr-2">Show Heatmap</label>
-                                <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-                                    <input type="checkbox" name="heatmap-toggle" id="heatmap-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
-                                    <label for="heatmap-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-slate-300 cursor-pointer"></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="calendar"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400">
-        <div class="container mx-auto px-6 py-12">
-            <div class="mt-8 border-t border-slate-700 pt-8 text-center text-sm">
-                <p>&copy; 2025 AcaDexa. All rights reserved. Created by KASHY.</p>
-            </div>
+    <section id="experience">
+        <h2>Internship Experience</h2>
+        <div class="exp-card">
+            [span_9](start_span)<h3>National Small Industries Corporation Technical Service Limited (NSIC)[span_9](end_span)</h3>
+            <p><em>Chennai | [span_10](start_span)06/2025 - 07/2025</em>[span_10](end_span)</p>
+            [span_11](start_span)<p>Completed a one-week training on Electric Vehicles at NSIC, gaining hands-on exposure to core components like motors and battery packs.[span_11](end_span) [span_12](start_span)This program provided me with a strong foundational understanding of EV technology.[span_12](end_span)</p>
         </div>
+        <div class="exp-card">
+            [span_13](start_span)<h3>Nano Technologies[span_13](end_span)</h3>
+            <p><em>Chennai | [span_14](start_span)06/2024 - 07/2024</em>[span_14](end_span)</p>
+            [span_15](start_span)<p>As a nanotechnology intern, I successfully developed and commissioned a PLC control panel, handling all stages from wiring based on schematics.[span_15](end_span)</p>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="project-card">
+            [span_16](start_span)<h3>AcaDexa - Smart Scheduling Platform[span_16](end_span)</h3>
+            [span_17](start_span)<p>A smart scheduling platform to efficiently manage, monitor, and maintain academic timetables for students and faculty, improving schedule transparency and reducing conflicts.[span_17](end_span)</p>
+        </div>
+        <div class="project-card">
+            [span_18](start_span)<h3>ZapAlert - Electric Fence Detector[span_18](end_span)</h3>
+            [span_19](start_span)<p>Engineered an ESP32-based distributed sensor network for remote detection and geotagging of unauthorized electric fences, significantly enhancing safety and reporting efficiency via cellular communication.[span_19](end_span)</p>
+        </div>
+        <div class="project-card">
+            [span_20](start_span)<h3>IoT-Based Automatic Braking System for E-Bikes[span_20](end_span)</h3>
+            [span_21](start_span)<p>Enhancing e-bike safety with an IoT-based automatic braking system, using LiDAR and accelerometer for obstacle detection.[span_21](end_span) [span_22](start_span)The system uses a Raspberry Pi Pico to process data and activate brakes via a stepper motor to prevent collisions.[span_22](end_span)</p>
+        </div>
+        <div class="project-card">
+            [span_23](start_span)<h3>IoT-Based Battery Monitoring System for Wireless Power Transfer[span_23](end_span)</h3>
+            [span_24](start_span)<p>Integrates IoT and WPT for real-time EV battery monitoring.[span_24](end_span) [span_25](start_span)Sensors track voltage, temperature, and current, sending data for analysis to enhance efficiency, reliability, and lifespan.[span_25](end_span) [span_26](start_span)This project also resulted in a published patent (Application No. 2025414046187).[span_26](end_span)</p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Technical & Soft Skills</h2>
+        <h3>Technical Skills</h3>
+        <ul>
+            [span_27](start_span)<li>Programming: Python, C, JavaScript, Assembly[span_27](end_span)</li>
+            [span_28](start_span)<li>Web Development: HTML 5, CSS[span_28](end_span)</li>
+            [span_29](start_span)<li>Engineering Software: ETAP, Matlab/Simulink[span_29](end_span)</li>
+            [span_30](start_span)<li>Controllers: Programmable Logic Controller (PLC)[span_30](end_span)</li>
+        </ul>
+        <h3>Soft Skills</h3>
+        <ul>
+            [span_31](start_span)<li>Leadership[span_31](end_span)</li>
+            [span_32](start_span)<li>Communication[span_32](end_span)</li>
+            [span_33](start_span)<li>Team Collaboration[span_33](end_span)</li>
+            [span_34](start_span)<li>Adaptability[span_34](end_span)</li>
+            [span_35](start_span)<li>Critical Thinking[span_35](end_span)</li>
+        </ul>
+    </section>
+
+    <section id="education">
+        <h2>Education</h2>
+        <p><strong>Bachelor of Engineering in Electrical and Electronics Engineering</strong> | [span_36](start_span)KCG College of Technology, Chennai (2022-2026)[span_36](end_span)</p>
+        [span_37](start_span)<ul><li>Current CGPA: 8.37[span_37](end_span)</li></ul>
+        <p><strong>Higher Secondary Education</strong> | [span_38](start_span)MAK Group of Schools, Chennai (2022)[span_38](end_span)</p>
+        [span_39](start_span)<ul><li>Percentage: 79%[span_39](end_span)</li></ul>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Feel free to reach out to me!</p>
+        <ul>
+            [span_40](start_span)<li><strong>Email:</strong> yokeshkumar2206@gmail.com[span_40](end_span)</li>
+            [span_41](start_span)<li><strong>Phone:</strong> +91 9094149941[span_41](end_span)</li>
+            [span_42](start_span)<li><strong>Location:</strong> Chennai, India[span_42](end_span)</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Yokesh Kumar M</p>
     </footer>
 
-    <!-- MODALS AND FLOATING BUTTONS -->
-    <div id="modals-container">
-        <!-- All modals will be injected here by JS -->
-    </div>
-
-    <script type="text/template" id="modals-template">
-        <!-- Class Details Modal -->
-        <div id="class-details-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center opacity-0 invisible">
-            <div class="bg-white dark:bg-slate-900 p-8 rounded-lg shadow-2xl max-w-md w-full transform scale-95 transition-transform duration-300 relative">
-                <button id="close-class-details-btn" class="absolute top-4 right-4 text-slate-500 dark:hover:text-white hover:text-slate-800 text-2xl">&times;</button>
-                <h3 id="class-modal-title" class="text-2xl font-bold mb-2 text-slate-800 dark:text-white"></h3>
-                <p id="class-modal-time" class="text-slate-500 dark:text-slate-400 mb-6"></p>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4"><i class="fa-solid fa-user-tie w-4 text-center"></i><span id="class-modal-prof"></span></div>
-                    <div class="flex items-center gap-4"><i class="fa-solid fa-building w-4 text-center"></i><span id="class-modal-room"></span></div>
-                    <div>
-                        <div class="flex items-center gap-4"><i class="fa-solid fa-users w-4 text-center"></i><span id="class-modal-students"></span></div>
-                        <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 mt-2"><div id="class-modal-capacity-bar" class="bg-teal-600 h-2.5 rounded-full" style="width: 0%"></div></div>
-                    </div>
-                    <div class="flex items-center gap-4"><i class="fa-solid fa-circle w-4 text-center"></i>Status: <span id="class-modal-status" class="font-semibold"></span></div>
-                </div>
-                <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
-                    <h4 class="font-bold text-slate-800 dark:text-white mb-4">Smart Classroom Controls</h4>
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between"><label for="record-toggle" class="text-slate-600 dark:text-slate-300">Auto-record Lecture</label><div class="relative inline-block w-10 mr-2 align-middle select-none"><input type="checkbox" name="record-toggle" id="record-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/><label for="record-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-slate-300 cursor-pointer"></label></div></div>
-                        <div class="flex items-center justify-between"><label for="av-toggle" class="text-slate-600 dark:text-slate-300">Request A/V Equipment</label><div class="relative inline-block w-10 mr-2 align-middle select-none"><input type="checkbox" name="av-toggle" id="av-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/><label for="av-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-slate-300 cursor-pointer"></label></div></div>
-                    </div>
-                </div>
-                 <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700 flex gap-2">
-                    <button id="mark-absent-btn" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-lg transition">Mark Teacher Absent</button>
-                    <button id="delete-class-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition">Delete Class</button>
-                </div>
-            </div>
-        </div>
-        <!-- Tutorial Modal -->
-        <div id="tutorial-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center opacity-0 invisible">
-            <div class="bg-white dark:bg-slate-900 p-8 rounded-lg shadow-2xl max-w-2xl w-full transform scale-95 transition-transform duration-300 relative">
-                 <button id="close-tutorial-btn" class="absolute top-4 right-4 text-slate-500 dark:hover:text-white hover:text-slate-800 text-2xl">&times;</button>
-                 <h3 class="text-2xl font-bold mb-6 text-center text-slate-800 dark:text-white">How to Use AcaDexa</h3>
-                 <div class="space-y-4 text-slate-600 dark:text-slate-300">
-                    <p><strong>1. Add a Class:</strong> Use the form above the calendar to enter class details. Click "Add to List".</p>
-                    <p><strong>2. Schedule a Class:</strong> Drag your new class from the "Unscheduled" list onto a time slot in the calendar.</p>
-                    <p><strong>3. View & Manage:</strong> Click any class on the calendar to see details, manage smart features, or mark a teacher absent.</p>
-                    <p><strong>4. Analyze & Optimize:</strong> Use the Dashboard to view analytics or run the AI Optimizer to find a more efficient schedule.</p>
-                    <p><strong>5. Log In to Save:</strong> Your changes are only saved when you are logged in. Use the "Staff Login" button to authenticate.</p>
-                 </div>
-            </div>
-        </div>
-        <!-- Toast Notification -->
-        <div id="toast" class="toast fixed bottom-6 left-1/2 -translate-x-1/2 bg-red-600 text-white py-2 px-5 rounded-lg shadow-lg opacity-0 transform translate-y-10 z-[70]">
-            <p id="toast-message">Toast message</p>
-        </div>
-        <!-- AI Chatbot Button & Modal -->
-        <button id="ask-ai-btn" class="fixed bottom-6 right-6 bg-teal-600 hover:bg-teal-700 text-white rounded-full h-16 w-16 flex items-center justify-center shadow-lg text-2xl z-40"><i class="fa-solid fa-robot"></i></button>
-        <div id="ai-chat-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center opacity-0 invisible">
-             <div class="bg-white dark:bg-slate-900 rounded-lg shadow-2xl max-w-lg w-full h-[70vh] flex flex-col transform scale-95 transition-transform duration-300">
-                <div class="p-4 border-b dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-800 rounded-t-lg"><h3 class="text-xl font-bold text-slate-800 dark:text-white">KASHY</h3><button id="close-chat-btn" class="text-slate-500 hover:text-slate-800 dark:hover:text-white text-2xl">&times;</button></div>
-                <div id="chat-window" class="flex-grow p-4 space-y-4 overflow-y-auto"><div class="flex justify-start"><div class="chat-bubble bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 p-3 rounded-lg">Hello! I'm KASHY, your scheduling assistant. How can I help?</div></div></div>
-                <div class="p-4 border-t dark:border-slate-700 bg-slate-50 dark:bg-slate-800 rounded-b-lg"><form id="chat-form" class="flex gap-2"><input type="text" id="chat-input" placeholder="Ask a question..." class="flex-grow rounded-md shadow-sm sm:text-sm dark:bg-slate-700 border-slate-300 dark:border-slate-600"><button id="voice-input-btn" type="button" class="text-slate-500 hover:text-teal-600 font-bold p-2 rounded-lg transition text-xl"><i class="fa-solid fa-microphone"></i></button><button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-bold p-2 rounded-lg transition"><i class="fa-solid fa-paper-plane"></i></button></form></div>
-            </div>
-        </div>
-        <!-- Auth Modal -->
-        <div id="auth-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center opacity-0 invisible">
-            <div class="bg-white dark:bg-slate-900 p-8 rounded-lg shadow-2xl max-w-sm w-full transform scale-95 transition-transform duration-300 relative">
-                 <button id="close-auth-btn" class="absolute top-4 right-4 text-slate-500 dark:hover:text-white hover:text-slate-800 text-2xl">&times;</button>
-                 <h3 id="auth-title" class="text-2xl font-bold mb-6 text-center text-slate-800 dark:text-white">Staff Login</h3>
-                 <form id="auth-form"><div class="space-y-4"><input type="text" id="auth-username" placeholder="Username" class="w-full px-4 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-600" required><input type="password" id="auth-password" placeholder="Password" class="w-full px-4 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-600" required></div><p id="auth-error" class="text-red-500 text-sm mt-2 h-4"></p><button type="submit" id="auth-submit-btn" class="mt-6 w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg transition">Login</button></form>
-            </div>
-        </div>
-        <!-- Absence Resolve Modal -->
-        <div id="absence-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center opacity-0 invisible">
-            <div class="bg-white dark:bg-slate-900 p-8 rounded-lg shadow-2xl max-w-md w-full transform scale-95 transition-transform duration-300">
-                <h3 class="text-2xl font-bold mb-4 text-slate-800 dark:text-white">Teacher Absent</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6">A teacher has been marked absent. Here are some AI-powered suggestions to resolve this:</p>
-                <div id="absence-suggestion-list" class="space-y-3"></div>
-                <button id="close-absence-modal" class="mt-8 w-full bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-lg transition">Close</button>
-            </div>
-        </div>
-        <!-- Optimizer Modal -->
-        <div id="optimizer-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center opacity-0 invisible">
-             <div class="bg-white dark:bg-slate-900 p-8 rounded-lg shadow-2xl max-w-4xl w-full transform scale-95 transition-transform duration-300">
-                <button id="close-optimizer-modal" class="absolute top-4 right-4 text-slate-500 dark:hover:text-white hover:text-slate-800 text-2xl">&times;</button>
-                <h3 class="text-2xl font-bold mb-2 text-slate-800 dark:text-white">AI Schedule Optimizer</h3>
-                <p class="text-slate-500 dark:text-slate-400 mb-6">The AI has analyzed your schedule and found a more optimal arrangement to reduce conflicts and improve resource utilization.</p>
-                <div class="grid grid-cols-2 gap-6">
-                    <div><h4 class="font-bold text-center mb-2">Before</h4><div id="optimizer-before" class="border rounded-lg p-2 bg-slate-50 dark:bg-slate-800 h-64 overflow-y-auto"></div></div>
-                    <div><h4 class="font-bold text-center mb-2">After (Optimized)</h4><div id="optimizer-after" class="border rounded-lg p-2 bg-slate-50 dark:bg-slate-800 h-64 overflow-y-auto"></div></div>
-                </div>
-                 <div class="mt-6 text-center">
-                    <button id="apply-optimization-btn" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg transition">Apply Optimized Schedule</button>
-                </div>
-            </div>
-        </div>
-    </script>
-
-
-    <script type="module">
-        // Firebase Imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-analytics.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDpb0a6yHbofdUO86EXkg6ILn5nQa98_zs",
-            authDomain: "acadexaa.firebaseapp.com",
-            projectId: "acadexaa",
-            storageBucket: "acadexaa.appspot.com", // Corrected storage bucket format
-            messagingSenderId: "933959447585",
-            appId: "1:933959447585:web:ac2fd1e1c79412342c5f60",
-            measurementId: "G-64F5SMENND"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = "1:933959447585:web:ac2fd1e1c79412342c5f60";
-        
-        let firebaseUser = null;
-        let isStaffLoggedIn = false;
-        let scheduleData = {};
-        let scheduleUnsubscribe = null;
-        let workloadChart = null;
-        let capacityChart = null;
-        let calendar = null;
-
-        const roomCapacities = { "101": 50, "102": 45, "Lab 3": 25, "303": 50, "Lab 1": 25, "202": 30 };
-
-        onAuthStateChanged(auth, user => {
-            if(user) {
-                firebaseUser = user;
-                if (isStaffLoggedIn) listenToSchedule();
-            }
-        });
-        
-        // --- DATA & STATE MANAGEMENT ---
-        function loadDefaultSchedule() {
-             scheduleData = {
-                "c1": { id: "c1", subject: "Calculus I", prof: "Dr. Evelyn", room: "101", students: 48, status: "approved", color: "#f43f5e", start: "T09:00:00", day: 1 },
-                "c2": { id: "c2", subject: "Intro to Physics", prof: "Dr. Cooper", room: "102", students: 40, status: "approved", color: "#14b8a6", start: "T10:00:00", day: 1 },
-                "c3": { id: "c3", subject: "Machine Learning", prof: "Dr. Ada", room: "Lab 3", students: 22, status: "pending", color: "#0ea5e9", start: "T11:00:00", day: 3 },
-                "c4": { id: "c4", subject: "Data Structures", prof: "Dr. Ada", room: "303", students: 45, status: "pending", color: "#0ea5e9", start: "T13:00:00", day: 4 },
-                "unscheduled": [
-                    { id: "c5", subject: "Organic Chemistry", prof: "Dr. Marie", room: "Lab 1", students: 20, status: "draft", color: "#f59e0b" }
-                ]
-            };
-            renderUnscheduled();
-            renderCalendar();
-            updateDashboard();
-            updateFacultyFilter();
-        }
-
-        async function saveScheduleToFirestore() {
-            if (!isStaffLoggedIn || !firebaseUser) return;
-            const simplifiedSchedule = { unscheduled: scheduleData.unscheduled || [] };
-            Object.values(scheduleData).forEach(item => {
-                if(item.id && !Array.isArray(item)) simplifiedSchedule[item.id] = item;
-            });
-            const scheduleRef = doc(db, "schedules", firebaseUser.uid); // Simplified path
-            try {
-                await setDoc(scheduleRef, { scheduleData: JSON.stringify(simplifiedSchedule) });
-            } catch (error) { console.error("Error saving schedule: ", error); }
-        }
-
-        function listenToSchedule() {
-            if (!isStaffLoggedIn || !firebaseUser) return;
-            const scheduleRef = doc(db, "schedules", firebaseUser.uid); // Simplified path
-            scheduleUnsubscribe = onSnapshot(scheduleRef, (docSnap) => {
-                if (docSnap.exists() && docSnap.data().scheduleData) {
-                    scheduleData = JSON.parse(docSnap.data().scheduleData);
-                } else {
-                    loadDefaultSchedule();
-                    saveScheduleToFirestore();
-                }
-                renderUnscheduled();
-                renderCalendar();
-                updateFacultyFilter();
-            }, (error) => console.error("Snapshot listener error:", error));
-        }
-
-        function convertScheduleToEvents() {
-            const events = [];
-            const today = new Date();
-            const dayOfWeek = today.getDay();
-            
-            Object.values(scheduleData).forEach(item => {
-                if(Array.isArray(item) || !item.day) return;
-                
-                const eventDate = new Date();
-                eventDate.setDate(today.getDate() - dayOfWeek + item.day);
-                const [hours, minutes] = item.start.substring(1).split(':');
-                eventDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-
-                events.push({
-                    id: item.id,
-                    title: item.subject,
-                    start: eventDate,
-                    end: new Date(eventDate.getTime() + 50 * 60000),
-                    color: item.color,
-                    extendedProps: { ...item }
-                });
-            });
-            return events;
-        }
-
-        // --- UI RENDERING & INITIALIZATION ---
-        function initializeModals() {
-            const modalsTemplate = document.getElementById('modals-template').innerHTML;
-            document.getElementById('modals-container').innerHTML = modalsTemplate;
-        }
-
-        function renderCalendar() {
-            if (!calendar) return;
-            calendar.removeAllEvents();
-            calendar.addEventSource(convertScheduleToEvents());
-            detectAllConflicts();
-        }
-
-        function renderUnscheduled() {
-            const listEl = document.getElementById('unscheduled-list');
-            listEl.innerHTML = '';
-            (scheduleData.unscheduled || []).forEach(classData => {
-                listEl.appendChild(createUnscheduledElement(classData));
-            });
-            new FullCalendar.Draggable(listEl, {
-                itemSelector: '.unscheduled-item',
-                eventData: (eventEl) => ({
-                    id: eventEl.dataset.id, title: eventEl.dataset.subject, color: eventEl.dataset.color,
-                    duration: '00:50', extendedProps: { ...JSON.parse(eventEl.dataset.classinfo) }
-                })
-            });
-        }
-        
-        function createUnscheduledElement(classData) {
-            const el = document.createElement('div');
-            el.className = 'unscheduled-item p-2 rounded-md text-sm';
-            el.style.backgroundColor = classData.color + '33';
-            el.style.borderLeft = `4px solid ${classData.color}`;
-            el.dataset.id = classData.id; el.dataset.subject = classData.subject; el.dataset.color = classData.color;
-            el.dataset.classinfo = JSON.stringify(classData);
-            el.innerHTML = `<strong class="font-bold text-slate-800 dark:text-slate-100">${classData.subject}</strong><div class="text-xs text-slate-600 dark:text-slate-300">${classData.prof}</div>`;
-            return el;
-        }
-
-        function initializeCalendar() {
-            const calendarEl = document.getElementById('calendar');
-            calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',
-                headerToolbar: { left: 'prev,next today', center: 'title', right: 'timeGridWeek,timeGridDay' },
-                allDaySlot: false, editable: true, droppable: true, slotMinTime: '08:00:00',
-                slotMaxTime: '18:00:00', eventReceive: handleEventReceive, eventDrop: handleEventDrop, eventClick: handleEventClick
-            });
-            calendar.render();
-        }
-
-        // --- EVENT HANDLERS & LOGIC ---
-        function handleEventClick(info) {
-            const props = info.event.extendedProps;
-            document.getElementById('class-modal-title').textContent = props.subject;
-            const timeFormat = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' });
-            document.getElementById('class-modal-time').textContent = `${info.event.start.toLocaleDateString('en-US', { weekday: 'long' })}, ${timeFormat.format(info.event.start)}`;
-            document.getElementById('class-modal-prof').textContent = props.prof;
-            document.getElementById('class-modal-room').textContent = `Room ${props.room}`;
-            const capacity = roomCapacities[props.room] || props.students;
-            document.getElementById('class-modal-students').textContent = `${props.students} / ${capacity} Students`;
-            const percentage = Math.min((props.students / capacity) * 100, 100);
-            const capacityBar = document.getElementById('class-modal-capacity-bar');
-            capacityBar.style.width = `${percentage}%`;
-            capacityBar.className = 'h-2.5 rounded-full ';
-            if(percentage > 90) capacityBar.classList.add('bg-red-500'); else if(percentage > 70) capacityBar.classList.add('bg-amber-500'); else capacityBar.classList.add('bg-teal-600');
-            document.getElementById('class-modal-status').textContent = props.status.charAt(0).toUpperCase() + props.status.slice(1);
-            document.getElementById('delete-class-btn').dataset.classId = props.id;
-            document.getElementById('mark-absent-btn').dataset.classId = props.id;
-            showModal('class-details-modal');
-        }
-
-        function handleDeleteClass() {
-             if (!isStaffLoggedIn) { showToast("Please log in to make changes."); return; }
-            const classId = document.getElementById('delete-class-btn').dataset.classId;
-            if (scheduleData[classId]) {
-                delete scheduleData[classId];
-                saveScheduleToFirestore(); renderCalendar(); hideModal('class-details-modal');
-                showToast("Class deleted successfully.", "success");
-            }
-        }
-
-        function handleEventReceive(info) {
-             if (!isStaffLoggedIn) { showToast("Please log in to make changes."); info.revert(); return; }
-            const props = info.event.extendedProps;
-            scheduleData[props.id] = { ...props, day: info.event.start.getDay(), start: 'T' + info.event.start.toTimeString().substring(0, 8) };
-            scheduleData.unscheduled = (scheduleData.unscheduled || []).filter(c => c.id !== props.id);
-            saveScheduleToFirestore(); renderUnscheduled(); renderCalendar(); updateFacultyFilter();
-        }
-
-        function handleEventDrop(info) {
-            if (!isStaffLoggedIn) { showToast("Please log in to make changes."); info.revert(); return; }
-            const classId = info.event.id;
-            scheduleData[classId] = { ...scheduleData[classId], day: info.event.start.getDay(), start: 'T' + info.event.start.toTimeString().substring(0, 8) };
-            saveScheduleToFirestore(); renderCalendar();
-        }
-        
-        let conflictCount = 0;
-        function detectAllConflicts() {
-            if(!calendar) return;
-            calendar.getEvents().forEach(e => e.setProp('classNames', e.extendedProps.isAbsent ? ['absent'] : []));
-            const scheduledClasses = Object.values(scheduleData).filter(c => c && c.day);
-            const conflictsFound = new Set();
-            const timeSlots = {};
-
-            scheduledClasses.forEach(classInfo => {
-                if (classInfo.isAbsent) return;
-                const key = `${classInfo.day}-${classInfo.start}`;
-                timeSlots[key] = timeSlots[key] || { profs: [], rooms: [] };
-                timeSlots[key].profs.push({prof: classInfo.prof, id: classInfo.id});
-                timeSlots[key].rooms.push({room: classInfo.room, id: classInfo.id});
-                const capacity = roomCapacities[classInfo.room];
-                if (capacity && classInfo.students > capacity) conflictsFound.add(classInfo.id);
-            });
-
-            Object.values(timeSlots).forEach(slot => {
-                const profCounts = slot.profs.reduce((acc, p) => ({...acc, [p.prof]: (acc[p.prof] || 0) + 1}), {});
-                const roomCounts = slot.rooms.reduce((acc, r) => ({...acc, [r.room]: (acc[r.room] || 0) + 1}), {});
-                slot.profs.forEach(p => { if (profCounts[p.prof] > 1) conflictsFound.add(p.id); });
-                slot.rooms.forEach(r => { if (roomCounts[r.room] > 1) conflictsFound.add(r.id); });
-            });
-
-            conflictCount = conflictsFound.size;
-            if (conflictCount > 0) conflictsFound.forEach(id => calendar.getEventById(id)?.setProp('classNames', ['conflict']));
-            updateDashboard();
-        }
-
-        function setupEventListeners() {
-            document.getElementById('ask-ai-btn').addEventListener('click', () => showModal('ai-chat-modal'));
-            document.getElementById('close-chat-btn').addEventListener('click', () => hideModal('ai-chat-modal'));
-            document.getElementById('tutorial-btn').addEventListener('click', () => showModal('tutorial-modal'));
-            document.getElementById('close-tutorial-btn').addEventListener('click', () => hideModal('tutorial-modal'));
-            document.getElementById('login-btn').addEventListener('click', () => showModal('auth-modal'));
-            document.getElementById('close-auth-btn').addEventListener('click', () => hideModal('auth-modal'));
-            document.getElementById('close-class-details-btn').addEventListener('click', () => hideModal('class-details-modal'));
-            document.getElementById('delete-class-btn').addEventListener('click', handleDeleteClass);
-            document.getElementById('mark-absent-btn').addEventListener('click', handleMarkAbsent);
-            document.getElementById('close-absence-modal').addEventListener('click', () => hideModal('absence-modal'));
-            document.getElementById('optimize-schedule-btn').addEventListener('click', handleOptimize);
-            document.getElementById('close-optimizer-modal').addEventListener('click', () => hideModal('optimizer-modal'));
-            document.getElementById('print-schedule-btn').addEventListener('click', () => calendar.print());
-            document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
-            document.getElementById('submit-approval-btn').addEventListener('click', submitForApproval);
-            document.getElementById('auth-form').addEventListener('submit', handleAuthSubmit);
-            document.getElementById('add-class-form').addEventListener('submit', handleAddClass);
-            document.getElementById('chat-form').addEventListener('submit', handleChatSubmit);
-            document.getElementById('heatmap-toggle').addEventListener('change', toggleHeatmap);
-            document.getElementById('view-as-filter').addEventListener('change', (e) => filterByFaculty(e.target.value));
-        }
-        
-        function handleAddClass(e) {
-            e.preventDefault();
-            if (!isStaffLoggedIn) { showToast("Please log in to add classes."); return; }
-            const form = e.target;
-            if (!scheduleData.unscheduled) scheduleData.unscheduled = [];
-            const newClass = { 
-                id: 'c' + Date.now(), subject: form.subject.value, prof: form.prof.value, room: form.room.value,
-                students: parseInt(form.students.value, 10), status: 'draft', color: form.color.value, 
-            };
-            scheduleData.unscheduled.push(newClass);
-            renderUnscheduled();
-            saveScheduleToFirestore();
-            updateFacultyFilter();
-            form.reset();
-        }
-
-        // --- AUTH & STATE CHANGES ---
-        function updateUIForAuthState() {
-            const authContainer = document.getElementById('auth-container');
-            const dashboard = document.getElementById('dashboard');
-            const navDashboardLink = document.getElementById('nav-dashboard-link');
-
-            if (isStaffLoggedIn) {
-                authContainer.innerHTML = `<div class="flex items-center gap-4"><span class="text-slate-300 text-sm hidden sm:block">Welcome, KASHY</span><button id="logout-btn" class="bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg transition">Logout</button></div>`;
-                document.getElementById('logout-btn').addEventListener('click', handleLogout);
-                dashboard.classList.remove('hidden'); navDashboardLink.classList.remove('hidden');
-            } else {
-                 authContainer.innerHTML = `<button id="login-btn" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-lg transition shadow-md hover:shadow-lg">Staff Login</button>`;
-                 document.getElementById('login-btn').addEventListener('click', () => showModal('auth-modal'));
-                 dashboard.classList.add('hidden'); navDashboardLink.classList.add('hidden');
-            }
-        }
-        
-        function handleAuthSubmit(e) {
-             e.preventDefault();
-             const username = document.getElementById('auth-username').value;
-             const password = document.getElementById('auth-password').value;
-             const errorEl = document.getElementById('auth-error');
-             errorEl.textContent = '';
-
-             if (username === "KASHY" && password === "sihwinners") {
-                isStaffLoggedIn = true; updateUIForAuthState();
-                if (firebaseUser) listenToSchedule(); else showToast("Authenticating...");
-                hideModal('auth-modal');
-             } else {
-                errorEl.textContent = "Invalid username or password.";
-             }
-        }
-
-        function handleLogout() {
-            if(scheduleUnsubscribe) scheduleUnsubscribe();
-            scheduleUnsubscribe = null; isStaffLoggedIn = false;
-            updateUIForAuthState(); loadDefaultSchedule();
-        }
-
-        // --- INNOVATIVE FEATURES ---
-        function handleOptimize() {
-            showModal('optimizer-modal');
-            const beforeContainer = document.getElementById('optimizer-before');
-            const afterContainer = document.getElementById('optimizer-after');
-            beforeContainer.innerHTML = '<p class="p-4 text-center">Analyzing current schedule...</p>';
-            afterContainer.innerHTML = '<p class="p-4 text-center">Generating optimal schedule...</p>';
-
-            // Simulate AI optimization
-            setTimeout(() => {
-                const scheduledClasses = Object.values(scheduleData).flat().filter(c => c && c.day);
-                const optimizedClasses = JSON.parse(JSON.stringify(scheduledClasses));
-                // Simple optimization: move last class to first available empty slot
-                if(optimizedClasses.length > 1) {
-                    const lastClass = optimizedClasses.pop();
-                    lastClass.day = 2; // Move to Tuesday
-                    lastClass.start = "T09:00:00";
-                    optimizedClasses.unshift(lastClass);
-                }
-                
-                beforeContainer.innerHTML = scheduledClasses.map(c => `<div class="p-1 text-xs rounded" style="background-color:${c.color}22"><strong>${c.subject}</strong> - Day ${c.day} at ${c.start.substring(1,6)}</div>`).join('');
-                afterContainer.innerHTML = optimizedClasses.map(c => `<div class="p-1 text-xs rounded" style="background-color:${c.color}22"><strong>${c.subject}</strong> - Day ${c.day} at ${c.start.substring(1,6)}</div>`).join('');
-            }, 1500);
-        }
-
-        function handleMarkAbsent() {
-            if (!isStaffLoggedIn) { showToast("Please log in to make changes."); return; }
-            const classId = document.getElementById('mark-absent-btn').dataset.classId;
-            const classInfo = scheduleData[classId];
-            classInfo.isAbsent = true;
-            
-            renderCalendar();
-            hideModal('class-details-modal');
-            showModal('absence-modal');
-
-            const suggestionList = document.getElementById('absence-suggestion-list');
-            suggestionList.innerHTML = '<p>Finding solutions...</p>';
-            // Simulate AI suggestions
-            setTimeout(() => {
-                suggestionList.innerHTML = `
-                    <div class="p-3 bg-teal-50 dark:bg-teal-900/40 rounded-lg">Substitute with <strong>Dr. Cooper</strong> (free this hour).</div>
-                    <div class="p-3 bg-teal-50 dark:bg-teal-900/40 rounded-lg">Reschedule to Friday at 2 PM (room 202 is available).</div>
-                    <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">Cancel class and notify students.</div>
-                `;
-            }, 1000);
-        }
-
-        function toggleHeatmap(event) {
-            const slots = document.querySelectorAll('.fc-timegrid-slot');
-            slots.forEach(slot => slot.classList.remove('heatmap-1', 'heatmap-2', 'heatmap-3', 'heatmap-4'));
-            
-            if (!event.target.checked) return;
-
-            const classCounts = {};
-            calendar.getEvents().forEach(event => {
-                const key = `${event.start.getDay()}-${event.start.getHours()}`;
-                classCounts[key] = (classCounts[key] || 0) + 1;
-            });
-
-            slots.forEach(slot => {
-                const time = slot.dataset.time.substring(0, 5); // e.g., "09:00"
-                const dayIndex = Array.from(slot.parentElement.children).indexOf(slot) % calendar.getOption('hiddenDays').length;
-                const day = slot.closest('.fc-day').dataset.date;
-                 // This part is complex with FullCalendar's structure, so we simplify
-                const hour = parseInt(time.split(':')[0]);
-                Object.keys(classCounts).forEach(key => {
-                    const [keyDay, keyHour] = key.split('-');
-                    if (parseInt(keyHour) === hour) {
-                        const count = classCounts[key];
-                        if (count > 0) slot.classList.add(`heatmap-${Math.min(count, 4)}`);
-                    }
-                });
-            });
-        }
-        
-        function updateFacultyFilter() {
-            const profs = new Set();
-            Object.values(scheduleData).flat().forEach(c => { if(c.prof) profs.add(c.prof) });
-            const filter = document.getElementById('view-as-filter');
-            filter.innerHTML = '<option value="all">Admin View (All)</option>';
-            profs.forEach(p => filter.innerHTML += `<option value="${p}">${p}</option>`);
-        }
-
-        function filterByFaculty(profName) {
-            calendar.getEvents().forEach(event => {
-                if (profName === 'all' || event.extendedProps.prof === profName) {
-                    event.setProp('classNames', event.extendedProps.isAbsent ? ['absent'] : []);
-                } else {
-                    event.setProp('classNames', ['filtered-out']);
-                }
-            });
-        }
-
-        // --- CHATBOT FUNCTIONS ---
-        async function callGeminiAPI(prompt) {
-            const apiKey = ""; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            const payload = { contents: [{ parts: [{ text: prompt }] }] };
-
-            for (let i = 0, delay = 1000; i < 5; i++, delay *= 2) {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (response.ok) {
-                        const result = await response.json();
-                        return result.candidates[0].content.parts[0].text;
-                    }
-                } catch (error) {
-                    console.warn("API call failed, retrying...", error);
-                }
-                await new Promise(resolve => setTimeout(resolve, delay));
-            }
-            throw new Error("API call failed after multiple retries.");
-        }
-        
-        function appendChatMessage(message, sender) {
-            const chatWindow = document.getElementById('chat-window');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
-            const bubbleDiv = document.createElement('div');
-            bubbleDiv.className = `chat-bubble p-3 rounded-lg max-w-[80%]`;
-            if (sender === 'user') {
-                bubbleDiv.classList.add('bg-teal-600', 'text-white');
-            } else {
-                bubbleDiv.classList.add('bg-slate-200', 'dark:bg-slate-700', 'text-slate-800', 'dark:text-slate-200');
-            }
-            bubbleDiv.textContent = message;
-            messageDiv.appendChild(bubbleDiv);
-            chatWindow.appendChild(messageDiv);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-        }
-
-        async function handleChatSubmit(e) {
-            e.preventDefault();
-            const input = document.getElementById('chat-input');
-            const userMessage = input.value.trim();
-            if (!userMessage) return;
-
-            appendChatMessage(userMessage, 'user');
-            input.value = '';
-
-            const chatWindow = document.getElementById('chat-window');
-            const typingIndicator = document.createElement('div');
-            typingIndicator.id = 'typing-indicator';
-            typingIndicator.className = 'flex justify-start';
-            typingIndicator.innerHTML = `<div class="chat-bubble bg-slate-200 dark:bg-slate-700 p-3 rounded-lg">KASHY is typing...</div>`;
-            chatWindow.appendChild(typingIndicator);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-
-            try {
-                const systemPrompt = `You are KASHY, an expert AI assistant for the AcaDexa scheduling platform. Be helpful and concise. Current schedule data: ${JSON.stringify(scheduleData)}`;
-                const fullPrompt = `${systemPrompt}\n\nUser question: "${userMessage}"`;
-                const aiResponse = await callGeminiAPI(fullPrompt);
-                appendChatMessage(aiResponse, 'ai');
-            } catch (error) {
-                console.error("Chatbot API error:", error);
-                appendChatMessage("Sorry, I'm having trouble connecting right now. Please try again later.", 'ai');
-            } finally {
-                typingIndicator.remove();
-            }
-        }
-
-        // --- UTILITY FUNCTIONS ---
-        function submitForApproval() {
-            if (!isStaffLoggedIn) { showToast("Please log in to perform this action."); return; }
-            Object.values(scheduleData).flat().forEach(c => { if (c && c.status === 'draft') c.status = 'pending'; });
-            saveScheduleToFirestore(); renderCalendar();
-            showToast("Draft classes submitted for approval.", "success");
-        }
-
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-            const icon = document.querySelector('#dark-mode-toggle i');
-            icon.className = document.documentElement.classList.contains('dark') ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-            if (workloadChart) updateChartTheme(workloadChart);
-            if (capacityChart) updateChartTheme(capacityChart);
-        }
-
-        function updateChartTheme(chart) {
-            const isDark = document.documentElement.classList.contains('dark');
-            const labelColor = isDark ? '#cbd5e1' : '#475569';
-            if(chart.options.scales) {
-                chart.options.scales.x.ticks.color = labelColor; chart.options.scales.y.ticks.color = labelColor;
-                chart.options.scales.x.grid.color = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
-                chart.options.scales.y.grid.color = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
-            }
-            if(chart.options.plugins.legend) chart.options.plugins.legend.labels.color = labelColor;
-            chart.update();
-        }
-
-        function showToast(message, type = "error") {
-            const toast = document.getElementById('toast');
-            toast.querySelector('p').textContent = message;
-            toast.className = `toast fixed bottom-6 left-1/2 -translate-x-1/2 text-white py-2 px-5 rounded-lg shadow-lg opacity-0 transform translate-y-10 z-[70] ${type === 'success' ? 'bg-green-600' : 'bg-red-600'}`;
-            toast.classList.remove('opacity-0', 'translate-y-10');
-            setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-10'); }, 3000);
-        }
-
-        function showModal(id) { 
-            const modal = document.getElementById(id);
-            modal.classList.remove('hidden', 'invisible', 'opacity-0');
-            modal.classList.add('flex', 'items-center', 'justify-center');
-            setTimeout(() => modal.querySelector('div:first-child').classList.remove('scale-95'), 10);
-        }
-        function hideModal(id) { 
-            const modal = document.getElementById(id);
-            modal.querySelector('div:first-child').classList.add('scale-95');
-            modal.classList.add('opacity-0');
-            setTimeout(() => { modal.classList.add('hidden', 'invisible'); }, 300);
-        }
-        
-        function updateDashboard() {
-            const scheduledClasses = Object.values(scheduleData).flat().filter(c => c && c.id && c.day);
-            const totalStudents = scheduledClasses.reduce((sum, c) => sum + (c.students || 0), 0);
-            
-            if(document.getElementById('kpi-total-classes')) {
-                document.getElementById('kpi-total-classes').textContent = scheduledClasses.length;
-                document.getElementById('kpi-unscheduled').textContent = (scheduleData.unscheduled || []).length;
-                document.getElementById('kpi-conflicts').textContent = conflictCount;
-                document.getElementById('kpi-total-students').textContent = totalStudents;
-            }
-        
-            const workload = {};
-            scheduledClasses.forEach(c => { if(c.prof) workload[c.prof] = (workload[c.prof] || 0) + 1; });
-            const workloadCtx = document.getElementById('workloadChart')?.getContext('2d');
-            if(workloadCtx) {
-                if (workloadChart) workloadChart.destroy();
-                workloadChart = new Chart(workloadCtx, {
-                    type: 'bar', data: { labels: Object.keys(workload), datasets: [{ label: 'Classes', data: Object.values(workload), backgroundColor: 'rgba(20, 184, 166, 0.6)' }] },
-                    options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => `${ctx.raw} classes (${(ctx.raw * 50 / 60).toFixed(1)} hrs)` } } }, scales: { y: { ticks: { autoSkip: false } } } }
-                });
-                updateChartTheme(workloadChart);
-            }
-
-            const capacityStats = { near: 0, healthy: 0, low: 0 };
-            scheduledClasses.forEach(c => {
-                const cap = roomCapacities[c.room];
-                if(cap) { const util = c.students / cap; if(util > 0.9) capacityStats.near++; else if(util > 0.5) capacityStats.healthy++; else capacityStats.low++; }
-            });
-            const capacityCtx = document.getElementById('capacityChart')?.getContext('2d');
-            if(capacityCtx) {
-                if (capacityChart) capacityChart.destroy();
-                capacityChart = new Chart(capacityCtx, {
-                    type: 'doughnut', data: { labels: ['Near Capacity (>90%)', 'Healthy (50-90%)', 'Low Enrollment (<50%)'], datasets: [{ data: [capacityStats.near, capacityStats.healthy, capacityStats.low], backgroundColor: ['#ef4444', '#f59e0b', '#14b8a6'] }] },
-                    options: { responsive: true, plugins: { legend: { position: 'top' } } }
-                });
-                updateChartTheme(capacityChart);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeModals();
-            initializeCalendar();
-            setupEventListeners();
-            signInAnonymously(auth).catch(err => console.error("Anonymous sign in failed:", err));
-            loadDefaultSchedule();
-        });
-    </script>
 </body>
 </html>
-
